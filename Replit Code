@@ -1,16 +1,17 @@
-import discord
+import os
+import discord 
 from discord.ext import commands
 
-# Enter your bot token here
-TOKEN = 'your_bot_token_here'
-
-# Create an instance of the bot
-bot = commands.Bot()
+TOKEN =  os.environ['TOKEN']
+intents1 = discord.Intents.default()
+intents1.typing = False
+intents1.presences = False
+bot = commands.Bot(command_prefix='#!', intents= intents1 )
 
 # Custom command
 @bot.command()
-async def greet(ctx):
-    await ctx.send(f'Hello, {ctx.author.mention}!')
+async def say(ctx, *, message):
+    await ctx.send(message)
 
 # Kick command
 @bot.command()
@@ -29,5 +30,5 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 async def on_ready():
     await bot.change_presence(status=discord.Status.dnd)
 
-# Run the bot
 bot.run(TOKEN)
+
