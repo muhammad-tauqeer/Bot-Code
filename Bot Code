@@ -1,0 +1,33 @@
+import discord
+from discord.ext import commands
+
+# Enter your bot token here
+TOKEN = 'your_bot_token_here'
+
+# Create an instance of the bot
+bot = commands.Bot()
+
+# Custom command
+@bot.command()
+async def greet(ctx):
+    await ctx.send(f'Hello, {ctx.author.mention}!')
+
+# Kick command
+@bot.command()
+async def kick(ctx, member: discord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await ctx.send(f'{member} has been kicked from the server.')
+
+# Ban command
+@bot.command()
+async def ban(ctx, member: discord.Member, *, reason=None):
+    await member.ban(reason=reason)
+    await ctx.send(f'{member} has been banned from the server.')
+
+# Set status to "Do Not Disturb"
+@bot.event
+async def on_ready():
+    await bot.change_presence(status=discord.Status.dnd)
+
+# Run the bot
+bot.run(TOKEN)
